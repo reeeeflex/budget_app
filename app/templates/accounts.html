@@ -1,0 +1,19 @@
+<!-- app/templates/accounts.html  -->
+{% extends "base.html" %} {% block content %}
+<h1>Checking Accounts</h1>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div>{{ form.name.label }} {{ form.name() }}</div>
+  <div>{{ form.balance.label }} {{ form.balance() }}</div>
+  <div>{{ form.date.label }} {{ form.date() }}</div>
+  {{ form.submit() }}
+</form>
+<h2>Your Accounts</h2>
+<ul>
+  {% for account in accounts %}
+  <li>
+    {{ account.name }} - ${{ account.balance }} (as of {{ account.date }})
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

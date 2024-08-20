@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<h1>Credit Cards</h1>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div>{{ form.name.label }} {{ form.name() }}</div>
+  <div>{{ form.balance.label }} {{ form.balance() }}</div>
+  <div>{{ form.interest_rate.label }} {{ form.interest_rate() }}</div>
+  <div>{{ form.promo_end_date.label }} {{ form.promo_end_date() }}</div>
+  <div>{{ form.min_payment.label }} {{ form.min_payment() }}</div>
+  {{ form.submit() }}
+</form>
+<h2>Your Credit Cards</h2>
+<ul>
+  {% for card in cards %}
+  <li>
+    {{ card.name }} - Balance: ${{ card.balance }} (Interest: {{
+    card.interest_rate }}%, Min Payment: ${{ card.min_payment }})
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

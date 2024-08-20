@@ -1,0 +1,18 @@
+{% extends "base.html" %} {% block content %}
+<h1>Savings Accounts</h1>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div>{{ form.name.label }} {{ form.name() }}</div>
+  <div>{{ form.balance.label }} {{ form.balance() }}</div>
+  <div>{{ form.account_type.label }} {{ form.account_type() }}</div>
+  {{ form.submit() }}
+</form>
+<h2>Your Savings Accounts</h2>
+<ul>
+  {% for account in accounts %}
+  <li>
+    {{ account.name }} - ${{ account.balance }} ({{ account.account_type }})
+  </li>
+  {% endfor %}
+</ul>
+{% endblock %}

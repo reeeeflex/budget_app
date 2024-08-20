@@ -1,0 +1,16 @@
+{% extends "base.html" %} {% block content %}
+<h1>Income Sources</h1>
+<form method="POST">
+  {{ form.hidden_tag() }}
+  <div>{{ form.name.label }} {{ form.name() }}</div>
+  <div>{{ form.amount.label }} {{ form.amount() }}</div>
+  <div>{{ form.frequency.label }} {{ form.frequency() }}</div>
+  {{ form.submit() }}
+</form>
+<h2>Your Income Sources</h2>
+<ul>
+  {% for source in income_sources %}
+  <li>{{ source.name }} - ${{ source.amount }} ({{ source.frequency }})</li>
+  {% endfor %}
+</ul>
+{% endblock %}
