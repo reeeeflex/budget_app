@@ -1,5 +1,5 @@
 # app/routes.py
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from app import db
 from app.models import CheckingAccount, IncomeSource, SavingsAccount, Expense, CreditCard
 from app.forms import CheckingAccountForm, IncomeSourceForm, SavingsAccountForm, ExpenseForm, CreditCardForm
@@ -70,3 +70,32 @@ def credit_cards():
         return redirect(url_for('main.credit_cards'))
     cards = CreditCard.query.all()
     return render_template('credit_cards.html', form=form, cards=cards)
+
+@bp.route('/dashboard')
+def dashboard():
+    # Fetch data for charts
+    expenses = Expense.query.all()
+    incomes = IncomeSource.query.all()
+    accounts = CheckingAccount.query.all()
+    savings = SavingsAccount.query.all()
+    credit_cards = CreditCard.query.all()
+
+    return render_template('dashboard.html', 
+                           expenses=expenses, 
+                           incomes=incomes, 
+                           accounts=accounts, 
+                           savings=savings, 
+                           credit_cards=credit_cards)
+
+@bp.route('/api/chart-data')
+def chart_data():
+    expenses = Expense.query.all()
+    incomes = IncomeSource.query.all()
+
+    expense_data = [{'name': e.name, 'amount': e.amount} for e in expenses]
+    income_data = [{'name': i.name, 'amount': i.amount} for i in incomes]
+
+    return jsonify({
+        'expenses': expense_data,
+        'incomes': income_data
+    })
